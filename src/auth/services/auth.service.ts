@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { EmployeesService } from 'src/employees/services/employees.service';
 import { LoginDTO } from '../dto/login.dto';
 import * as bcrypt from 'bcrypt';
+import { EmployeeGroup } from 'src/employees/enums/employee-group.enum';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     pass: string,
   ): Promise<null | { name: string; email: string }> {
     const employee = await this.employeesService.findEmployee(email);
-    if (employee) {
+    if (employee && employee.group === EmployeeGroup.HR) {
       const isMatch = await bcrypt.compare(pass, employee.password);
       if (!isMatch) {
         return null;
