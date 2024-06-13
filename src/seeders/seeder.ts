@@ -8,9 +8,7 @@ import {
 
 seeder({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://Seniory:Test1Test@cluster0.ejzdvgv.mongodb.net/?retryWrites=true&w=majority',
-    ),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
     MongooseModule.forFeature([
       { name: Employee.name, schema: EmployeeSchema },
     ]),

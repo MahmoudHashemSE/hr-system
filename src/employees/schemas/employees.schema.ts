@@ -21,6 +21,10 @@ export class Employee extends Document {
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);
 
 EmployeeSchema.pre<Employee>('save', async function (next) {
+  if (this.isModified('email') || this.isNew) {
+    this.email = this.email.toLowerCase();
+  }
+  
   if (this.isModified('password') || this.isNew) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
