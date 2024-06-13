@@ -34,12 +34,16 @@ export class EmployeeSeeder implements Seeder {
       },
     ];
 
-    for (const employee of employees) {
-      const salt = await bcrypt.genSalt(10);
-      employee.password = await bcrypt.hash(employee.password, salt);
-    }
+    const processedEmployees = await Promise.all(
+      employees.map(async employee => {
+        const email = employee.email.toLowerCase();
+        const salt = await bcrypt.genSalt(10);
+        const password = await bcrypt.hash(employee.password, salt);
+        return { ...employee, email, password };
+      }),
+    );
 
-    return this.employeeModel.insertMany(employees);
+    return this.employeeModel.insertMany(processedEmployees);
   }
 
   async drop(): Promise<any> {
