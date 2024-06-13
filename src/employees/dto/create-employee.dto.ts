@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { EmployeeGroup } from '../enums/employee-group.enum';
 
 export class CreateEmployeeDto {
   @IsNotEmpty()
@@ -10,6 +11,10 @@ export class CreateEmployeeDto {
   email: string;
 
   @IsNotEmpty()
-  @IsEmail()
+  @IsString()
   password: string;
+
+  @IsNotEmpty()
+  @IsEnum(EmployeeGroup)
+  group: EmployeeGroup;
 }

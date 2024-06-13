@@ -35,7 +35,7 @@ export class EmployeeSeeder implements Seeder {
     ];
 
     const processedEmployees = await Promise.all(
-      employees.map(async employee => {
+      employees.map(async (employee) => {
         const email = employee.email.toLowerCase();
         const salt = await bcrypt.genSalt(10);
         const password = await bcrypt.hash(employee.password, salt);
