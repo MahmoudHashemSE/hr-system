@@ -10,7 +10,7 @@ describe('EmployeesController', () => {
   let service: EmployeesService;
 
   const mockEmployeesService = {
-    create: jest.fn(dto => {
+    create: jest.fn((dto) => {
       return { id: Date.now(), ...dto };
     }),
     update: jest.fn((id, dto) => {
@@ -67,7 +67,10 @@ describe('EmployeesController', () => {
       ...updateEmployeeDto,
     });
 
-    expect(mockEmployeesService.update).toHaveBeenCalledWith('1', updateEmployeeDto);
+    expect(mockEmployeesService.update).toHaveBeenCalledWith(
+      '1',
+      updateEmployeeDto,
+    );
   });
 
   it('should return an array of employees', async () => {

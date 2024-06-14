@@ -42,6 +42,9 @@ describe('AttendanceController', () => {
       ...createAttendanceDto,
     });
 
-    expect(mockAttendanceService.create).toHaveBeenCalledWith('1', createAttendanceDto);
+    expect(mockAttendanceService.create).toHaveBeenCalledWith(
+      '1',
+      createAttendanceDto,
+    );
   });
 });

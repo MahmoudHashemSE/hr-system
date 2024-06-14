@@ -12,7 +12,7 @@ describe('EmployeesService', () => {
   let model: any;
 
   const mockEmployeeModel = {
-    create: jest.fn().mockImplementation(dto => ({
+    create: jest.fn().mockImplementation((dto) => ({
       save: jest.fn().mockResolvedValue({ _id: '1', ...dto }),
     })),
     findById: jest.fn().mockResolvedValue({
@@ -41,6 +41,20 @@ describe('EmployeesService', () => {
     expect(service).toBeDefined();
   });
 
+  it('should create an employee', async () => {
+    const createEmployeeDto: CreateEmployeeDto = {
+      name: 'Test Employee',
+      email: 'test@example.com',
+      password: 'password',
+      group: EmployeeGroup.NORMAL_EMPLOYEE,
+    };
+
+    model.findOne.mockResolvedValueOnce(null);
+
+    await expect(service.create(createEmployeeDto)).resolves.not.toThrow();
+    expect(model.create).toHaveBeenCalledWith(createEmployeeDto);
+  });
+
   it('should not create an employee with an existing email', async () => {
     const createEmployeeDto: CreateEmployeeDto = {
       name: 'Test Employee',
@@ -51,7 +65,9 @@ describe('EmployeesService', () => {
 
     model.findOne.mockResolvedValueOnce({ email: 'test@example.com' });
 
-    await expect(service.create(createEmployeeDto)).rejects.toThrow(ConflictException);
+    await expect(service.create(createEmployeeDto)).rejects.toThrow(
+      ConflictException,
+    );
   });
 
   it('should update an employee', async () => {
@@ -79,7 +95,9 @@ describe('EmployeesService', () => {
 
     model.findById.mockResolvedValueOnce(null);
 
-    await expect(service.update('1', updateEmployeeDto)).rejects.toThrow(NotFoundException);
+    await expect(service.update('1', updateEmployeeDto)).rejects.toThrow(
+      NotFoundException,
+    );
   });
 
   it('should find all employees', async () => {
