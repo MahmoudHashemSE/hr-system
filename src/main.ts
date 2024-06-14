@@ -10,7 +10,10 @@ async function bootstrap() {
 
   app.use(helmet());
 
-  app.enableCors({ origin: 'http://localhost:3000', credentials: true });
+  app.enableCors({
+    origin: ['http://localhost:3000', 'https://hr-system.azurewebsites.net'],
+    credentials: true,
+  });
 
   const configService = app.get(ConfigService);
 
