@@ -18,7 +18,7 @@ export class EmployeesService {
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const { name, email, password, group } = createEmployeeDto;
 
-    const existingEmployee = await this.employeeModel.findOne({ email }).exec();
+    const existingEmployee = await this.employeeModel.findOne({ email });
 
     if (existingEmployee) {
       throw new ConflictException('Employee with this email already exists');

@@ -10,7 +10,7 @@ async function bootstrap() {
 
   app.use(helmet());
 
-  app.enableCors({ origin: '*', credentials: true });
+  app.enableCors({ origin: 'http://localhost:3000', credentials: true });
 
   const configService = app.get(ConfigService);
 
